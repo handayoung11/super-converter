@@ -3,27 +3,47 @@
 
 <body>
     <div id="root"></div>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
         const root = document.getElementById("root");
 
         const App = () => {
-            const [count, setCount] = React.useState(0);
+            const [minutes, setMinutes] = React.useState(0);
 
-            const onClick = () => {
-                setCount(current => current + 1);
+            const onChange = e => {
+                setMinutes(e.target.value);
             }
 
-            const test = 'title';
+            const reset = () => {
+                setMinutes(0);
+            };
+
             return <div>
-                <h3>Total clicks: {count}</h3>
-                <button onClick={onClick}>Clicke me!</button>
+                <h1>Super Converter</h1>
+                <div>
+                    <label htmlFor="minutes">minutes</label>
+                    <input onChange={(onChange)}
+                        value={minutes}
+                        id="minutes"
+                        type="number"
+                        placeholder="Minutes" />
+                </div>
+                <div>
+                    <label htmlFor="hours">hours</label>
+                    <input disabled
+                        value={minutes / 60}
+                        id="hours"
+                        type="number"
+                        placeholder="hours" />
+                </div>
+                <button onClick={reset}>reset</button>
             </div>;
         };
-        ReactDOM.render(<App />, root);
+        const container = ReactDOM.createRoot(root);
+        container.render(<App />);
     </script>
 </body>
 
