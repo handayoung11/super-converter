@@ -12,7 +12,7 @@
 
         const App = () => {
             const [amount, setAmount] = React.useState(0);
-            const [flipped, setFlipped] = React.useState(false);
+            const [isOnHour, setOnHour] = React.useState(false);
 
             const onChange = e => {
                 setAmount(e.target.value);
@@ -24,7 +24,7 @@
 
             const onFlip = () => {
                 reset();
-                setFlipped(c => !c);
+                setOnHour(c => !c);
             };
 
             return <div>
@@ -32,19 +32,19 @@
                 <div>
                     <label htmlFor="minutes">minutes</label>
                     <input onChange={onChange}
-                        value={!flipped ? amount : amount * 60}
+                        value={!isOnHour ? amount : amount * 60}
                         id="minutes"
                         type="number"
-                        disabled={flipped}
+                        disabled={isOnHour}
                         placeholder="Minutes" />
                 </div>
                 <div>
                     <label htmlFor="hours">hours</label>
                     <input onChange={onChange}
-                        value={flipped ? amount : amount / 60}
+                        value={isOnHour ? amount : amount / 60}
                         id="hours"
                         type="number"
-                        disabled={!flipped}
+                        disabled={!isOnHour}
                         placeholder="hours" />
                 </div>
                 <button onClick={reset}>reset</button>
