@@ -48,7 +48,7 @@
                         placeholder="hours" />
                 </div>
                 <button onClick={reset}>reset</button>
-                <button onClick={onFlip}>flip</button>
+                <button onClick={onFlip}>{isOnHour ? "min to hour" : "hour to min"}</button>
             </div>;
         };
         const container = ReactDOM.createRoot(root);
