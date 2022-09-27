@@ -11,6 +11,28 @@
         const root = document.getElementById("root");
 
         const App = () => {
+            const [converter, setConverter] = React.useState("m2h");
+
+            const onChange = e => {
+                setConverter(e.target.value);
+            }
+
+            return <div>
+                <h1>Super Converter</h1>
+                <select onChange={onChange}>
+                    <option value="m2h">Minutes To Hours</option>
+                    <option value="k2m">Killometers To Miles</option>
+                </select>
+                <hr />
+                {converter === "m2h" ? <MinutesToHours /> : converter === "k2m" ? <KillometersToMiles /> : "Select converter"}
+            </div>;
+        };
+
+        const KillometersToMiles = () => {
+            return <h3>Killometers To Miles</h3>
+        }
+
+        const MinutesToHours = () => {
             const [amount, setAmount] = React.useState(0);
             const [isOnHour, setOnHour] = React.useState(false);
 
@@ -28,7 +50,6 @@
             };
 
             return <div>
-                <h1>Super Converter</h1>
                 <div>
                     <label htmlFor="minutes">minutes</label>
                     <input onChange={onChange}
