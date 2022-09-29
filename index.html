@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
-
-<body>
+<head>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body class="dark:bg-slate-900 dark:text-white">
     <div id="root"></div>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -18,13 +22,22 @@
             }
 
             return <div>
-                <h1>Super Converter</h1>
-                <select onChange={onChange}>
-                    <option value="m2h">Minutes To Hours</option>
-                    <option value="k2m">Killometers To Miles</option>
-                </select>
-                <hr />
-                {converter === "m2h" ? <MinutesToHours /> : converter === "k2m" ? <KillometersToMiles /> : "Select converter"}
+                <div className="py-4 border-b border-slate-900/10 dark:bg-slate-800 lg:border-0 px-0">
+                    <div className="flex items-center justify-center gap-x-3">
+                        <img className="" src="./img/converter.png" alt="" width="50px"/>
+                        <h1 className="text-2xl font-semibold">Super Converter</h1>
+                    </div>
+                    <div className="absolute h-96 dark:bg-slate-800 w-full inset-0 z-min"></div>
+                </div>
+                <div className="flex flex-col justify-center items-center mt-28">
+                    <div className="">
+                        <select className="md:text-5xl text-3xl mb-5 font-extrabold" onChange={onChange}>
+                            <option value="m2h">Minutes To Hours</option>
+                            <option value="k2m">Killometers To Miles</option>
+                        </select>
+                        {converter === "m2h" ? <MinutesToHours /> : converter === "k2m" ? <KillometersToMiles /> : "Select converter"}
+                    </div>
+                </div>
             </div>;
         };
 
@@ -68,8 +81,8 @@
                         disabled={!isOnHour}
                         placeholder="hours" />
                 </div>
-                <button onClick={reset}>reset</button>
-                <button onClick={onFlip}>{isOnHour ? "min to hour" : "hour to min"}</button>
+                <a onClick={reset}>reset</a>
+                <a onClick={onFlip}>{isOnHour ? "min to hour" : "hour to min"}</a>
             </div>;
         };
         const container = ReactDOM.createRoot(root);
