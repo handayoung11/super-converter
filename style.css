@@ -24,3 +24,7 @@ h1 {
 .z-min {
     z-index: -1;
 }
+
+.min-h-14 {
+    min-height: 56px;
+}

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width">
 </head>
+
 <body class="dark:bg-slate-900 dark:text-white">
     <div id="root"></div>
     <link rel="stylesheet" href="./style.css">
@@ -24,20 +26,27 @@
             return <div>
                 <div className="py-4 border-b border-slate-900/10 px-0 bg-slate-600 lg:border-0 dark:bg-slate-800">
                     <div className="flex items-center justify-center gap-x-3">
-                        <img className="" src="./img/converter.png" alt="" width="50px"/>
-                        <h1 className="text-5xl font-semibold">Super Converter</h1>
+                        <img className="" src="./img/converter.png" alt="" width="50px" />
+                        <h1 className="text-4xl lg:text-5xl font-semibold">Super Converter</h1>
                     </div>
                     <div className="absolute h-96 w-full inset-0 z-min bg-slate-600 dark:bg-slate-800"></div>
                 </div>
-                <div className="flex flex-col justify-center items-center max-w-screen-xl mx-auto my-14 lg:my-28 px-8 lg:px-16 py-4 lg:py-6">
-                    <div className="w-full rounded-xl p-3 lg:p-12 bg-slate-400 dark:bg-slate-600">
-                        <select className="md:text-5xl text-3xl mb-5 font-extrabold" onChange={onChange}>
-                            <option value="m2h">Minutes To Hours</option>
-                            <option value="k2m">Killometers To Miles</option>
-                        </select>
-                        {converter === "m2h" ? <MinutesToHours /> : converter === "k2m" ? <KillometersToMiles /> : "Select converter"}
+                <section className="flex flex-col justify-center items-center max-w-screen-xl mx-auto my-14 lg:my-28 px-8 lg:px-16 py-4 lg:py-6">
+                    <div className="w-full rounded-xl bg-slate-400 dark:bg-slate-600">
+                        <div className="flex justify-items-center min-h-14">
+                            <TabItem></TabItem>
+                            <TabItem></TabItem>
+                        </div>
+                        <div className="p-3 lg:p-12">
+                            <select className="md:text-5xl text-3xl mb-5 font-extrabold" onChange={onChange}>
+                                <option value="m2h">Minutes To Hours</option>
+                                <option value="k2m">Killometers To Miles</option>
+                            </select>
+                            {converter === "m2h" ? <MinutesToHours /> : converter === "k2m" ? <KillometersToMiles /> : "Select converter"}
+                        </div>
                     </div>
-                </div>
+
+                </section>
             </div>;
         };
 
@@ -85,6 +94,10 @@
                 <a onClick={onFlip}>{isOnHour ? "min to hour" : "hour to min"}</a>
             </div>;
         };
+
+        const TabItem = () => {
+            return <button className="flex-1 flex justify-center items-center text-lg">Time</button>
+        }
         const container = ReactDOM.createRoot(root);
         container.render(<App />);
     </script>
