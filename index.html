@@ -27,7 +27,7 @@
                 <div className="py-4 border-b border-slate-900/10 px-0 bg-slate-600 lg:border-0 dark:bg-slate-800">
                     <div className="flex items-center justify-center gap-x-3">
                         <img className="" src="./img/converter.png" alt="" width="50px" />
-                        <h1 className="text-4xl lg:text-5xl font-semibold">Super Converter</h1>
+                        <h1 className="text-4xl lg:text-5xl font-semibold text-white">Super Converter</h1>
                     </div>
                     <div className="absolute h-96 w-full inset-0 z-min bg-slate-600 dark:bg-slate-800"></div>
                 </div>
@@ -50,6 +50,17 @@
             return <h3>Killometers To Miles</h3>
         }
 
+        const Input = ({ onChange }) => {
+            return <div className="text_input">
+                <span>
+                    <input onChange={onChange}
+                        id="minutes"
+                        type="number"
+                        placeholder="Minutes" />
+                </span>
+            </div>;
+        }
+
         const MinutesToHours = () => {
             const [amount, setAmount] = React.useState(0);
             const [isOnHour, setOnHour] = React.useState(false);
@@ -58,36 +69,22 @@
                 setAmount(e.target.value);
             }
 
-            const reset = () => {
-                setAmount(0);
-            };
-
             const onFlip = () => {
                 reset();
                 setOnHour(c => !c);
             };
 
             return <div>
-                <div>
-                    <label htmlFor="minutes">minutes</label>
-                    <input onChange={onChange}
-                        value={!isOnHour ? amount : amount * 60}
-                        id="minutes"
-                        type="number"
-                        disabled={isOnHour}
-                        placeholder="Minutes" />
+                <div className="sm:converter-input-box">
+                    <label htmlFor="minutes">Amount</label>
+                    <Input onChange={onChange} />
+                    <label htmlFor="hours">From</label>
+                    <Input onChange={onChange} />
+                    <label htmlFor="hours">To</label>
+                    <Input onChange={onChange} />
                 </div>
-                <div>
-                    <label htmlFor="hours">hours</label>
-                    <input onChange={onChange}
-                        value={isOnHour ? amount : amount / 60}
-                        id="hours"
-                        type="number"
-                        disabled={!isOnHour}
-                        placeholder="hours" />
-                </div>
-                <a onClick={reset}>reset</a>
-                <a onClick={onFlip}>{isOnHour ? "min to hour" : "hour to min"}</a>
+
+                <a onClick={onFlip}>convert</a>
             </div>;
         };
 
