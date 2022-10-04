@@ -17,7 +17,7 @@
         const root = document.getElementById("root");
 
         const App = () => {
-            const [converter, setConverter] = React.useState("m2h");
+            const [converter, setConverter] = React.useState("time");
 
             const onChange = e => {
                 setConverter(e.target.value);
@@ -34,15 +34,11 @@
                 <section className="flex flex-col justify-center items-center max-w-screen-xl mx-auto my-14 lg:my-28 px-8 lg:px-16 py-4 lg:py-6">
                     <div className="w-full rounded-xl bg-slate-400 dark:bg-slate-600">
                         <div className="flex justify-items-center min-h-14">
-                            <TabItem></TabItem>
-                            <TabItem></TabItem>
+                            <TabItem value="time" text="Time" selectedVal={converter} isFirst={true} setConverter={setConverter}></TabItem>
+                            <TabItem value="distance" text="Distance" selectedVal={converter} isLast={true} setConverter={setConverter}></TabItem>
                         </div>
                         <div className="p-3 lg:p-12">
-                            <select className="md:text-5xl text-3xl mb-5 font-extrabold" onChange={onChange}>
-                                <option value="m2h">Minutes To Hours</option>
-                                <option value="k2m">Killometers To Miles</option>
-                            </select>
-                            {converter === "m2h" ? <MinutesToHours /> : converter === "k2m" ? <KillometersToMiles /> : "Select converter"}
+                            {converter === "time" ? <MinutesToHours /> : converter === "distance" ? <KillometersToMiles /> : "Select converter"}
                         </div>
                     </div>
 
@@ -95,8 +91,21 @@
             </div>;
         };
 
-        const TabItem = () => {
-            return <button className="flex-1 flex justify-center items-center text-lg">Time</button>
+        const TabItem = ({ value, text, selectedVal, isFirst = false, isLast = false, setConverter }) => {
+            let className = "flex-1 flex justify-center items-center text-lg text-white";
+            const selected = selectedVal === value;
+            if (!selected) {
+                className += " bg-slate-900 text-gray-500";
+            }
+            if (isFirst) {
+                className += " rounded-tl-xl"
+            }
+            if (isLast) {
+                className += " rounded-tr-xl"
+            }
+            return <button onClick={() => {
+                setConverter(value);
+            }} className={className}>{text}</button>
         }
         const container = ReactDOM.createRoot(root);
         container.render(<App />);
