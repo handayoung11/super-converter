@@ -2,8 +2,15 @@
     box-sizing: border-box;
 }
 
-@media (min-width: 576px) {
-    .sm\:converter-input-box {
+@media (prefers-color-scheme: dark) {
+    input::selection {
+        color: white;
+        background-color: #ACCEF7;
+    }
+}
+
+@media (min-width: 640px) {
+    .converter-input-box {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         grid-template-rows: auto auto;
