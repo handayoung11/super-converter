@@ -18,11 +18,15 @@ select {
 
 .text_input {
     /* width: auto; */
-    border: 1px solid rgb(221, 221, 221);
+    border: 1px solid  rgb(38 38 38);
     box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;
     border-radius: 6px;
     padding: 12px;
     background-color: transparent;
+}
+
+.text_input:focus-within {
+    border-color: rgb(221, 221, 221);
 }
 
 input {
