@@ -50,15 +50,40 @@
             return <h3>Killometers To Miles</h3>
         }
 
-        const Input = ({ onChange }) => {
+        const Input = ({ onChange, id }) => {
             return <div className="text_input">
                 <span>
                     <input onChange={onChange}
-                        id="minutes"
-                        type="number"
-                        placeholder="Minutes" />
+                        id={id}
+                        type="number" />
                 </span>
             </div>;
+        }
+
+        const SelectInput = () => {
+            const [focused, setFocused] = React.useState(false);
+            // v 버튼
+            let btn = <svg className="w-4 shrink-0 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 10" aria-hidden="true">
+                <path fill="currentColor" fillRule="evenodd" d="M8 9.5L.5 2 1.55.95 8 7.4 14.45.95 15.5 2 8 9.5z" clipRule="evenodd"></path>
+            </svg>;
+
+            if (focused) {
+                // x 버튼
+                btn = <svg className="w-3 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 12" aria-hidden="true">
+                    <path fill="currentColor" fillRule="evenodd" d="M12 1.05L10.95 0 6 4.95 1.05 0 0 1.05 4.95 6 0 10.95 1.05 12 6 7.05 10.95 12 12 10.95 7.05 6 12 1.05z" clipRule="evenodd"></path>
+                </svg>;
+            }
+
+            return <div className="text_input flex" onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}>
+                <span className="grow">
+                    <input type="text" />
+                </span>
+                {btn}
+            </div>;
+        }
+
+        const TimeConverterLabel = ({ text, htmlFor }) => {
+            return <label className="mx-0 mt-6 mb-1 sm:m-0" htmlFor={htmlFor}>{text}</label>
         }
 
         const MinutesToHours = () => {
@@ -69,22 +94,15 @@
                 setAmount(e.target.value);
             }
 
-            const onFlip = () => {
-                reset();
-                setOnHour(c => !c);
-            };
-
             return <div>
-                <div className="sm:converter-input-box">
-                    <label htmlFor="minutes">Amount</label>
-                    <Input onChange={onChange} />
-                    <label htmlFor="hours">From</label>
-                    <Input onChange={onChange} />
-                    <label htmlFor="hours">To</label>
-                    <Input onChange={onChange} />
+                <div className="converter-input-box flex-col flex">
+                    <TimeConverterLabel text="Amount" htmlFor="amount" />
+                    <Input id="amount" onChange={onChange} />
+                    <TimeConverterLabel text="From" htmlFor="from" />
+                    <SelectInput id="from" onChange={onChange} />
+                    <TimeConverterLabel text="To" htmlFor="to" />
+                    <SelectInput id="to" onChange={onChange} />
                 </div>
-
-                <a onClick={onFlip}>convert</a>
             </div>;
         };
 
