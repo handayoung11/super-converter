@@ -62,6 +62,7 @@
 
         const SelectInput = () => {
             const [focused, setFocused] = React.useState(false);
+            const [isFirst, setFirst] = React.useState(true);
             // v 버튼
             let btn = <svg className="w-4 shrink-0 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 10" aria-hidden="true">
                 <path fill="currentColor" fillRule="evenodd" d="M8 9.5L.5 2 1.55.95 8 7.4 14.45.95 15.5 2 8 9.5z" clipRule="evenodd"></path>
@@ -74,12 +75,22 @@
                 </svg>;
             }
 
-            return <div className="text_input flex" onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}>
-                <span className="grow">
-                    <input type="text" />
-                </span>
-                {btn}
-            </div>;
+            return <div className="relative">
+                <div className="select_input flex" onFocus={() => { setFocused(true); setFirst(false); }} onBlur={() => setFocused(false)}>
+                    <span className="grow">
+                        <input type="text" />
+                    </span>
+                    {btn}
+                </div>
+                {
+                    !isFirst ? <div className="align-baseline">
+                        <ul className={"absolute " + (focused ? "fade-in" : "fade-out")} >
+                            <li>minute</li>
+                            <li>hour</li>
+                        </ul>
+                    </div> : ''
+                }
+            </div >;
         }
 
         const TimeConverterLabel = ({ text, htmlFor }) => {

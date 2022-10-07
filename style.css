@@ -2,6 +2,22 @@
     box-sizing: border-box;
 }
 
+@keyframes fade-in {
+    0% {opacity: 0;transform: translateY(10px)}
+    100% {opacity: 1;transform: translateY(0)}
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0)
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px)
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     input::selection {
         color: white;
@@ -23,17 +39,54 @@ select {
     margin: 3px;
 }
 
-.text_input {
+.select_input {
+    position: relative;
+}
+
+.text_input,
+.select_input {
     /* width: auto; */
-    border: 1px solid  rgb(38 38 38);
+    border: 1px solid rgb(38 38 38);
     box-shadow: rgb(0 17 51 / 5%) 0px 3px 15px;
     border-radius: 6px;
     padding: 12px;
     background-color: transparent;
 }
 
-.text_input:focus-within {
+.text_input:focus-within,
+.select_input:focus-within {
     border-color: rgb(221, 221, 221);
+}
+
+.select_input+div>ul {
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+    max-height: 300px;
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: rgb(0 17 51 / 10%) 0px 10px 40px;
+    background-color: rgb(33, 33, 33);
+}
+
+.fade-in {
+    animation: fade-in 0.5s;
+}
+
+.fade-out {
+    animation: fade-out 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.select_input+div>ul>li {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    color: white;
 }
 
 input {
@@ -61,11 +114,11 @@ h1 {
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
