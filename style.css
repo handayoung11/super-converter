@@ -95,6 +95,10 @@ select {
     color: white;
 }
 
+.select_input+div>ul>li:hover {
+    background-color: rgb(51 65 85);
+}
+
 input {
     width: 100%;
     outline: none;
