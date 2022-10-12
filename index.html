@@ -60,7 +60,7 @@
             </div>;
         }
 
-        const SelectInput = ({ items, _default, onChange }) => {
+        const SelectInput = ({ items, value, onChange }) => {
             const [focused, setFocused] = React.useState(false);
             const [isFirst, setFirst] = React.useState(true);
 
@@ -70,7 +70,11 @@
                         return i;
                 }
             }
-            const [selectedIdx, setSelectedIdx] = React.useState(getSelectedIdx(_default));
+            const _selectedIdx = getSelectedIdx(value);
+            const [selectedIdx, setSelectedIdx] = React.useState(_selectedIdx);
+            if (_selectedIdx != selectedIdx) {
+                setSelectedIdx(_selectedIdx);
+            }
 
             // v 버튼
             let btn = <svg className="text-black w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 10" aria-hidden="true"><path fill="currentColor" fillRule="evenodd" d="M8 9.5L.5 2 1.55.95 8 7.4 14.45.95 15.5 2 8 9.5z" clipRule="evenodd"></path></svg>;
@@ -85,8 +89,9 @@
             }
 
             const onClick = e => {
-                setSelectedIdx(getSelectedIdx(e.target.getAttribute('value')));
-                onChange(selectedIdx);
+                const val = e.target.getAttribute('value');
+                setSelectedIdx(getSelectedIdx(val));
+                onChange(val);
             }
 
             return <div className="relative">
@@ -124,6 +129,14 @@
             const onChange = e => {
                 setAmount(e.target.value);
             }
+            const onFirstSelectChagne = (val, focusedInput, comparedInput) => {
+                focusedInput[1](val);
+                const origin = focusedInput[0];
+                focusedInput[1](val);
+                if (val === comparedInput[0]) {
+                    comparedInput[1](origin);
+                }
+            }
 
             const items = [{ text: 'minutes', val: 'm' }, { text: 'hours', val: 'h' }];
             return <div>
@@ -131,9 +144,9 @@
                     <TimeConverterLabel text="Amount" htmlFor="amount" />
                     <Input id="amount" onChange={onChange} />
                     <TimeConverterLabel text="From" htmlFor="from" />
-                    <SelectInput id="from" items={items} _default={firstSelected[0]} />
+                    <SelectInput id="from" items={items} value={firstSelected[0]} onChange={val => onFirstSelectChagne(val, firstSelected, secondSelected)} />
                     <TimeConverterLabel text="To" htmlFor="to" />
-                    <SelectInput id="to" items={items} _default={secondSelected[0]} />
+                    <SelectInput id="to" items={items} value={secondSelected[0]} onChange={idx => onFirstSelectChagne(idx, secondSelected, firstSelected)} />
                 </div>
             </div>;
         };
