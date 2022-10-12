@@ -95,7 +95,7 @@
             }
 
             return <div className="relative">
-                <div className="flex p-4">
+                <div className={"flex p-4 " + (focused && "text-white")}>
                     <div className="grow">
                         {items[selectedIdx].text}
                     </div>
