@@ -84,7 +84,9 @@
 
             if (focused) {
                 // x 버튼
-                btn = <button className="shrink-0 z-10 rounded-full w-7 h-7" onKeyDown={e => { if (e.shiftKey && e.keyCode == 9) isOut = false; }} onClick={e => e.target.blur()}>
+                btn = <button className="shrink-0 z-10 rounded-full w-7 h-7 absolute right-2"
+                    onKeyDown={e => { if (e.shiftKey && e.keyCode == 9) isOut = false; }}
+                    onClick={e => e.target.blur()}>
                     <svg className="w-3 shrink-0 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 12" aria-hidden="true">
                         <path fill="currentColor" fillRule="evenodd" d="M12 1.05L10.95 0 6 4.95 1.05 0 0 1.05 4.95 6 0 10.95 1.05 12 6 7.05 10.95 12 12 10.95 7.05 6 12 1.05z" clipRule="evenodd"></path>
                     </svg>
