@@ -99,6 +99,26 @@
                 onChange(val);
             }
 
+            const onKeyDown = e => {
+                const current = e.currentTarget.parentElement.querySelector('li.hovered');
+                const firstLi = e.currentTarget.parentElement.querySelector('li');
+                const lastLi = e.currentTarget.parentElement.querySelector('li:last-child');
+                let next;
+                if (e.keyCode == 40) { //v
+                    current && current.classList.remove('hovered');
+                    next = current ? (current.nextElementSibling ?? firstLi) : firstLi;
+                } else if (e.keyCode == 38) { //^
+                    current && current.classList.remove('hovered');
+                    next = current ? (current.previousElementSibling ?? lastLi) : lastLi;
+                } else if (e.keyCode == 27) { //esc
+                    e.target.blur();
+                } else if (e.keyCode == 13) { //enter
+                    current.click();
+                    e.target.blur();
+                }
+                next && next.classList.add('hovered');
+            };
+
             let isOut = true;
             return <div className="relative">
                 <div className={"flex p-4 " + (focused && " text-white")}>
