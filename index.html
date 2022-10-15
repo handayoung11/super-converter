@@ -95,6 +95,7 @@
 
             const onClick = e => {
                 const val = e.target.getAttribute('value');
+                e.target.classList.add('cursor-default');
                 setSelectedIdx(getSelectedIdx(val));
                 onChange(val);
             }
@@ -127,7 +128,7 @@
                     </div>
                     {focused || btn}
                 </div>
-                <div className="select_input flex p-3        cursor-pointer"
+                <div className={"select_input flex p-3 cursor-pointer" + (focused && ' focus-within')}
                     onClick={e => {
                         const input = e.target.querySelector('input');
                         input && input.focus();
@@ -150,7 +151,7 @@
                 </div>
                 {
                     !isFirst ? <div className="align-baseline">
-                        <ul className={"absolute " + (focused ? "fade-in" : "fade-out")} >
+                        <ul className={"absolute cursor-pointer " + (focused ? "fade-in" : "fade-out")} >
                             {items.map((item) => {
                                 return <li onClick={onClick} key={item.val} value={item.val}
                                     onMouseMove={(e) => {
