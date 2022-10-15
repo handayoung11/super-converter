@@ -132,9 +132,13 @@
                         const input = e.target.querySelector('input');
                         input && input.focus();
                     }}
+                    onKeyDown={onKeyDown}
                     onFocus={() => { setFocused(true); setFirst(false); }} onBlur={e => {
-                        if (isOut)
+                        if (isOut) {
                             setFocused(false)
+                            const hovered = e.currentTarget.parentElement.querySelector('li.hovered');
+                            hovered && hovered.classList.remove('hovered');
+                        }
                         else
                             isOut = true
                     }}>
@@ -148,7 +152,18 @@
                     !isFirst ? <div className="align-baseline">
                         <ul className={"absolute " + (focused ? "fade-in" : "fade-out")} >
                             {items.map((item) => {
-                                return <li onClick={onClick} key={item.val} value={item.val}>{item.text}</li>
+                                return <li onClick={onClick} key={item.val} value={item.val}
+                                    onMouseMove={(e) => {
+                                        const cur = e.currentTarget.parentElement.querySelector('li.hovered');
+                                        cur && cur.classList.remove('hovered');
+                                        e.target.classList.add('hovered');
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.target.classList.add('hovered');
+                                        e.target.classList.remove('cursor-default');
+                                    }}
+                                    onMouseLeave={e => e.target.classList.remove('hovered')}
+                                >{item.text}</li>
                             })}
                         </ul>
                     </div> : ''
