@@ -14,7 +14,8 @@
     }
     to {
         opacity: 0;
-        transform: translateY(10px)
+        transform: translateY(10px);
+        visibility: hidden;
     }
 }
 
@@ -60,7 +61,7 @@ select {
 }
 
 .text_input:focus-within,
-.select_input:focus-within {
+.select_input.focus-within {
     border-color: rgb(221, 221, 221);
 }
 
@@ -71,6 +72,7 @@ select {
     max-height: 300px;
     margin-top: 8px;
     border-radius: 8px;
+    top: 100%;
     box-shadow: rgb(0 17 51 / 10%) 0px 10px 40px;
     background-color: rgb(33, 33, 33);
 }
@@ -89,13 +91,12 @@ select {
     -webkit-box-align: center;
     align-items: center;
     padding: 10px 12px;
-    cursor: pointer;
     position: relative;
     overflow: hidden;
     color: white;
 }
 
-.select_input+div>ul>li:hover {
+.select_input+div>ul>li.hovered {
     background-color: rgb(51 65 85);
 }
 
