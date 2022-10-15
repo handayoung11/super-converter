@@ -63,16 +63,17 @@
             </div>;
         }
 
+        const items = [{ text: 'minutes', val: 'm', sec: 60 }, { text: 'hours', val: 'h', sec: 3600 }];
+        const getSelectedIdx = val => {
+            for (const i in items) {
+                if (items[i].val == val)
+                    return i;
+            }
+        }
+
         const SelectInput = ({ id, items, value, onChange }) => {
             const [focused, setFocused] = React.useState(false);
             const [isFirst, setFirst] = React.useState(true);
-
-            const getSelectedIdx = val => {
-                for (const i in items) {
-                    if (items[i].val == val)
-                        return i;
-                }
-            }
             const _selectedIdx = getSelectedIdx(value);
             const [selectedIdx, setSelectedIdx] = React.useState(_selectedIdx);
             if (_selectedIdx != selectedIdx) {
@@ -179,6 +180,7 @@
         const MinutesToHours = () => {
             const [amount, setAmount] = React.useState(0);
             const [isOnHour, setOnHour] = React.useState(false);
+            const [converter, setConverter] = React.useState(1 / 60);
             const firstSelected = React.useState('m');
             const secondSelected = React.useState('h');
 
@@ -186,15 +188,17 @@
                 setAmount(e.target.value);
             }
             const onFirstSelectChagne = (val, focusedInput, comparedInput) => {
-                focusedInput[1](val);
                 const origin = focusedInput[0];
+                let convertedVal = comparedInput[0];
                 focusedInput[1](val);
                 if (val === comparedInput[0]) {
                     comparedInput[1](origin);
+                    convertedVal = origin;
                 }
+
+                setConverter(items[getSelectedIdx(val)].sec / items[getSelectedIdx(convertedVal)].sec);
             }
 
-            const items = [{ text: 'minutes', val: 'm' }, { text: 'hours', val: 'h' }];
             return <div>
                 <div className="converter-input-box flex-col flex">
                     <TimeConverterLabel text="Amount" htmlFor="amount" />
@@ -203,6 +207,9 @@
                     <SelectInput id="from" items={items} value={firstSelected[0]} onChange={val => onFirstSelectChagne(val, firstSelected, secondSelected)} />
                     <TimeConverterLabel text="To" htmlFor="to" />
                     <SelectInput id="to" items={items} value={secondSelected[0]} onChange={idx => onFirstSelectChagne(idx, secondSelected, firstSelected)} />
+                </div>
+                <div>
+                    {amount} {firstSelected[0]} is {amount * converter} {secondSelected[0]}
                 </div>
             </div>;
         };
