@@ -71,10 +71,10 @@
             }
         }
 
-        const SelectInput = ({ id, items, value, onChange }) => {
+        const SelectInput = ({ id, items, idx, onChange }) => {
             const [focused, setFocused] = React.useState(false);
             const [isFirst, setFirst] = React.useState(true);
-            const _selectedIdx = getSelectedIdx(value);
+            const _selectedIdx = idx;
             const [selectedIdx, setSelectedIdx] = React.useState(_selectedIdx);
             if (_selectedIdx != selectedIdx) {
                 setSelectedIdx(_selectedIdx);
@@ -95,10 +95,10 @@
             }
 
             const onClick = e => {
-                const val = e.target.getAttribute('value');
                 e.target.classList.add('cursor-default');
-                setSelectedIdx(getSelectedIdx(val));
-                onChange(val);
+                const idx = getSelectedIdx(e.target.getAttribute('value'));
+                setSelectedIdx(idx);
+                onChange(idx);
             }
 
             const onKeyDown = e => {
@@ -181,22 +181,22 @@
             const [amount, setAmount] = React.useState(0);
             const [isOnHour, setOnHour] = React.useState(false);
             const [converter, setConverter] = React.useState(1 / 60);
-            const firstSelected = React.useState('m');
-            const secondSelected = React.useState('h');
+            const firstSelected = React.useState(getSelectedIdx('m'));
+            const secondSelected = React.useState(getSelectedIdx('h'));
 
             const onChange = e => {
                 setAmount(e.target.value);
             }
-            const onFirstSelectChagne = (val, focusedInput, comparedInput) => {
+            const onFirstSelectChagne = (idx, focusedInput, comparedInput) => {
                 const origin = focusedInput[0];
-                let convertedVal = comparedInput[0];
-                focusedInput[1](val);
-                if (val === comparedInput[0]) {
+                let convertedIdx = comparedInput[0];
+                focusedInput[1](idx);
+                if (idx === comparedInput[0]) {
                     comparedInput[1](origin);
-                    convertedVal = origin;
+                    convertedIdx = origin;
                 }
 
-                setConverter(items[getSelectedIdx(val)].sec / items[getSelectedIdx(convertedVal)].sec);
+                setConverter(items[idx].sec / items[convertedIdx].sec);
             }
 
             return <div>
@@ -204,12 +204,12 @@
                     <TimeConverterLabel text="Amount" htmlFor="amount" />
                     <Input id="amount" onChange={onChange} />
                     <TimeConverterLabel text="From" htmlFor="from" />
-                    <SelectInput id="from" items={items} value={firstSelected[0]} onChange={val => onFirstSelectChagne(val, firstSelected, secondSelected)} />
+                    <SelectInput id="from" items={items} idx={firstSelected[0]} onChange={val => onFirstSelectChagne(val, firstSelected, secondSelected)} />
                     <TimeConverterLabel text="To" htmlFor="to" />
-                    <SelectInput id="to" items={items} value={secondSelected[0]} onChange={idx => onFirstSelectChagne(idx, secondSelected, firstSelected)} />
+                    <SelectInput id="to" items={items} idx={secondSelected[0]} onChange={idx => onFirstSelectChagne(idx, secondSelected, firstSelected)} />
                 </div>
                 <div>
-                    {amount} {firstSelected[0]} is {amount * converter} {secondSelected[0]}
+                    {amount} {items[firstSelected[0]].text} is {amount * converter} {items[secondSelected[0]].text}
                 </div>
             </div>;
         };
