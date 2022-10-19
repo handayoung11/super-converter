@@ -208,8 +208,13 @@
                     <TimeConverterLabel text="To" htmlFor="to" />
                     <SelectInput id="to" items={items} idx={secondSelected[0]} onChange={idx => onFirstSelectChagne(idx, secondSelected, firstSelected)} />
                 </div>
-                <div>
-                    {amount} {items[firstSelected[0]].text} is {amount * converter} {items[secondSelected[0]].text}
+                <div className="mt-6">
+                    <p className="text-2xl">
+                        {amount} {items[firstSelected[0]].text} =
+                    </p>
+                    <div>
+                        {amount * converter} {items[secondSelected[0]].text}
+                    </div>
                 </div>
             </div>;
         };
