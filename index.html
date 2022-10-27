@@ -199,6 +199,21 @@
                 setConverter(items[idx].sec / items[convertedIdx].sec);
             }
 
+            let result = String(amount * converter).split('.');
+            if (result[1] && result[1].includes('e')) {
+                result = '';
+            }
+            let frontLabel = result[0];
+            let behindLabel = '';
+            if (result.length == 2) {
+                frontLabel += '.';
+                if (result[1].length <= 2) {
+                    frontLabel += result[1];
+                } else {
+                    frontLabel += result[1].slice(0, 2);
+                    behindLabel = result[1].slice(2, 7)
+                }
+            }
             return <div>
                 <div className="converter-input-box flex-col flex">
                     <TimeConverterLabel text="Amount" htmlFor="amount" />
@@ -213,7 +228,7 @@
                         {amount} {items[firstSelected[0]].text} =
                     </p>
                     <p className="text-5xl my-2">
-                        {amount * converter} {items[secondSelected[0]].text}
+                        {frontLabel + behindLabel} {items[secondSelected[0]].text}
                     </p>
                 </div>
             </div>;
